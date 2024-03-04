@@ -1,0 +1,22 @@
+title: Parcial 1 Machine Learning
+author: Ricardo Watts
+logo: logo.png
+
+execute:
+  execute_notebooks: force
+
+latex:
+  latex_documents:
+    targetname: book.tex
+
+bibtex_bibfiles:
+  - references.bib
+
+repository:
+  url: https://github.com/WaffleLovesCherries/Parcial1MachineLearning
+  path_to_book: doc
+  branch: master
+
+html:
+  use_issues_button: true
+  use_repository_button: true

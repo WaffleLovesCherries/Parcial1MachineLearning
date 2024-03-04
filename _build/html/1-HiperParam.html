@@ -1,0 +1,2176 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Breast Cancer &#8212; Parcial 1 Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '1-HiperParam';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modelos de Clasificación" href="2-FraudDetection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Parcial 1 Machine Learning - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Parcial 1 Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Breast Cancer
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2-FraudDetection.html">Modelos de Clasificación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3-WindSpeed.html">Velocidad del viento</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/WaffleLovesCherries/Parcial1MachineLearning" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/WaffleLovesCherries/Parcial1MachineLearning/issues/new?title=Issue%20on%20page%20%2F1-HiperParam.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/1-HiperParam.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Breast Cancer</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boston-housing">Boston Housing</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">make_scorer</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_breast_cancer</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">load_breast_cancer</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">feature_names</span> <span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="breast-cancer">
+<h1>Breast Cancer<a class="headerlink" href="#breast-cancer" title="Link to this heading">#</a></h1>
+<p>Dado que se trabaja con un caso tan sensible como es la detección de tumores malignos, es preferible maximizar el número de tumores malignos predichos de forma correcta, por lo que se usará la métrica ´recall´. Aún así, tambien se desea mentener un balance entre presicion y recall, por lo que se buscará un valor de recall tal que el valor de <span class="math notranslate nohighlight">\(f_1\)</span> no se reduzca en gran medida.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">vif</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span>
+    <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">variance_inflation_factor</span><span class="p">(</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">]</span>
+    <span class="k">if</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span> <span class="k">break</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>area error</th>
+      <th>compactness error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>153.40</td>
+      <td>0.04904</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>74.08</td>
+      <td>0.01308</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>94.03</td>
+      <td>0.04006</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>27.23</td>
+      <td>0.07458</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>94.44</td>
+      <td>0.02461</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>564</th>
+      <td>158.70</td>
+      <td>0.02891</td>
+    </tr>
+    <tr>
+      <th>565</th>
+      <td>99.04</td>
+      <td>0.02423</td>
+    </tr>
+    <tr>
+      <th>566</th>
+      <td>48.55</td>
+      <td>0.03731</td>
+    </tr>
+    <tr>
+      <th>567</th>
+      <td>86.22</td>
+      <td>0.06158</td>
+    </tr>
+    <tr>
+      <th>568</th>
+      <td>19.15</td>
+      <td>0.00466</td>
+    </tr>
+  </tbody>
+</table>
+<p>569 rows × 2 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">())])</span>
+
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;classifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">KNeighborsClassifier</span><span class="p">()],</span>
+        <span class="s1">&#39;classifier__n_neighbors&#39;</span><span class="p">:</span> <span class="p">[</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span><span class="o">*</span><span class="mi">9</span><span class="p">)</span><span class="o">//</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span> <span class="p">)</span> <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;classifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">LogisticRegression</span><span class="p">()],</span>
+        <span class="s1">&#39;classifier__C&#39;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span> <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;recall&#39;</span><span class="p">:</span> <span class="s1">&#39;recall&#39;</span><span class="p">,</span> <span class="s1">&#39;f1&#39;</span><span class="p">:</span> <span class="s1">&#39;f1&#39;</span> <span class="p">},</span> <span class="n">refit</span> <span class="o">=</span> <span class="s1">&#39;recall&#39;</span> <span class="p">)</span>
+<span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Score: </span><span class="si">{</span><span class="n">gs</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="w"> </span><span class="n">x_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_test</span><span class="w"> </span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;classifier&#39;: KNeighborsClassifier(), &#39;classifier__n_neighbors&#39;: 240}
+1.0
+Score: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Podemos ver de antemano que el mejor modelo es un 280-NN con un recall de aproximadamente el 100%, por posibles errores de aproximación.</p>
+<p>Ahora, con ambos modelos manualmente tenemos:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">,</span><span class="s1">&#39;f1&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span><span class="o">*</span><span class="mi">9</span><span class="p">)</span><span class="o">//</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span> <span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">,</span><span class="s1">&#39;f1&#39;</span><span class="p">]:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span> <span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">i</span> <span class="p">),</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorer</span> <span class="p">)</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="p">)</span>
+    <span class="n">Results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+<span class="n">Results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>recall</th>
+      <th>f1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>0.906980</td>
+      <td>0.888283</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>0.914672</td>
+      <td>0.890874</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>0.929487</td>
+      <td>0.895786</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>0.936895</td>
+      <td>0.898456</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>0.940598</td>
+      <td>0.898630</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>0.940598</td>
+      <td>0.898630</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>0.951709</td>
+      <td>0.904758</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>0.955413</td>
+      <td>0.903189</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>0.959117</td>
+      <td>0.901982</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>0.962821</td>
+      <td>0.903809</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>0.962821</td>
+      <td>0.897515</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>0.962821</td>
+      <td>0.890169</td>
+    </tr>
+    <tr>
+      <th>130</th>
+      <td>0.970228</td>
+      <td>0.885096</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>0.974074</td>
+      <td>0.882607</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>0.988889</td>
+      <td>0.885705</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>0.992593</td>
+      <td>0.877292</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>0.996296</td>
+      <td>0.873488</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td>0.996296</td>
+      <td>0.869387</td>
+    </tr>
+    <tr>
+      <th>190</th>
+      <td>0.996296</td>
+      <td>0.866483</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>0.996296</td>
+      <td>0.863813</td>
+    </tr>
+    <tr>
+      <th>210</th>
+      <td>0.996296</td>
+      <td>0.862337</td>
+    </tr>
+    <tr>
+      <th>220</th>
+      <td>0.996296</td>
+      <td>0.856706</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>0.996296</td>
+      <td>0.852774</td>
+    </tr>
+    <tr>
+      <th>240</th>
+      <td>1.000000</td>
+      <td>0.839690</td>
+    </tr>
+    <tr>
+      <th>250</th>
+      <td>1.000000</td>
+      <td>0.831819</td>
+    </tr>
+    <tr>
+      <th>260</th>
+      <td>1.000000</td>
+      <td>0.820283</td>
+    </tr>
+    <tr>
+      <th>270</th>
+      <td>1.000000</td>
+      <td>0.782093</td>
+    </tr>
+    <tr>
+      <th>280</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>290</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>310</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>320</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>340</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>350</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>360</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>370</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>380</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Como se puede ver, a partir de 280 es el punto donde el recall es muy cercano a 1 sin reducir el valor de <span class="math notranslate nohighlight">\(f_1\)</span>, por lo que podemos tomar estos como los mejores parametros del modelo</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">,</span><span class="s1">&#39;f1&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">,</span><span class="s1">&#39;f1&#39;</span><span class="p">]:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">LogisticRegression</span><span class="p">(</span> <span class="n">C</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span> <span class="p">),</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorer</span> <span class="p">)</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="p">)</span>
+    <span class="n">Results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+<span class="n">Results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>recall</th>
+      <th>f1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>-10</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>-9</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>-8</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>-7</th>
+      <td>1.000000</td>
+      <td>0.774110</td>
+    </tr>
+    <tr>
+      <th>-6</th>
+      <td>1.000000</td>
+      <td>0.780933</td>
+    </tr>
+    <tr>
+      <th>-5</th>
+      <td>0.996296</td>
+      <td>0.862337</td>
+    </tr>
+    <tr>
+      <th>-4</th>
+      <td>0.966524</td>
+      <td>0.889065</td>
+    </tr>
+    <tr>
+      <th>-3</th>
+      <td>0.948006</td>
+      <td>0.897529</td>
+    </tr>
+    <tr>
+      <th>-2</th>
+      <td>0.948006</td>
+      <td>0.902591</td>
+    </tr>
+    <tr>
+      <th>-1</th>
+      <td>0.948006</td>
+      <td>0.902591</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>0.948006</td>
+      <td>0.902591</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.948006</td>
+      <td>0.902591</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.948006</td>
+      <td>0.900840</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.944302</td>
+      <td>0.898982</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.940598</td>
+      <td>0.896733</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.940598</td>
+      <td>0.896733</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0.940598</td>
+      <td>0.896733</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.940598</td>
+      <td>0.896733</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.940598</td>
+      <td>0.896733</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.940598</td>
+      <td>0.896733</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>En este caso podemos ver que a pesar de conseguir un recall tan alto como en el modelo anterior, su <span class="math notranslate nohighlight">\(f_1\)</span> se reduce en mayor medida, por lo que se considera el modelo 280-NN como superior.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nn_classifier</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">280</span><span class="p">)</span>
+<span class="n">logit_classifier</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+
+<span class="n">nn_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">logit_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">nn_predictions</span> <span class="o">=</span> <span class="n">nn_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">logit_predictions</span> <span class="o">=</span> <span class="n">logit_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+<span class="n">nn_recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">nn_predictions</span><span class="p">)</span>
+<span class="n">nn_precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">nn_predictions</span><span class="p">)</span>
+<span class="n">nn_f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">nn_predictions</span><span class="p">)</span>
+<span class="n">nn_auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">nn_predictions</span><span class="p">)</span>
+
+<span class="n">logit_recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">logit_predictions</span><span class="p">)</span>
+<span class="n">logit_precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">logit_predictions</span><span class="p">)</span>
+<span class="n">logit_f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">logit_predictions</span><span class="p">)</span>
+<span class="n">logit_auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">logit_predictions</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;280-NN&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">nn_recall</span><span class="p">,</span> <span class="n">nn_precision</span><span class="p">,</span> <span class="n">nn_f1</span><span class="p">,</span> <span class="n">nn_auc</span><span class="p">],</span>
+    <span class="s1">&#39;Logistic Regression&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">logit_recall</span><span class="p">,</span> <span class="n">logit_precision</span><span class="p">,</span> <span class="n">logit_f1</span><span class="p">,</span> <span class="n">logit_auc</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Recall&#39;</span><span class="p">,</span> <span class="s1">&#39;Precision&#39;</span><span class="p">,</span> <span class="s1">&#39;F1&#39;</span><span class="p">,</span> <span class="s1">&#39;AUC&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Recall</th>
+      <th>Precision</th>
+      <th>F1</th>
+      <th>AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>280-NN</th>
+      <td>1.0</td>
+      <td>0.676923</td>
+      <td>0.807339</td>
+      <td>0.618182</td>
+    </tr>
+    <tr>
+      <th>Logistic Regression</th>
+      <td>1.0</td>
+      <td>0.619718</td>
+      <td>0.765217</td>
+      <td>0.509091</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>En este caso, se confirma que el modelo 280-NN es superior a la regresión logistica para la base de datos.</p>
+<section id="boston-housing">
+<h2>Boston Housing<a class="headerlink" href="#boston-housing" title="Link to this heading">#</a></h2>
+<p>En este caso, se evaluarán 3 modelos de regresión: Lineal, Ridge y Lasso</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">Ridge</span><span class="p">,</span> <span class="n">Lasso</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mglearn</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">mglearn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_extended_boston</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>94</th>
+      <th>95</th>
+      <th>96</th>
+      <th>97</th>
+      <th>98</th>
+      <th>99</th>
+      <th>100</th>
+      <th>101</th>
+      <th>102</th>
+      <th>103</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.18</td>
+      <td>0.067815</td>
+      <td>0.0</td>
+      <td>0.314815</td>
+      <td>0.577505</td>
+      <td>0.641607</td>
+      <td>0.269203</td>
+      <td>0.000000</td>
+      <td>0.208015</td>
+      <td>...</td>
+      <td>0.043270</td>
+      <td>0.059749</td>
+      <td>0.208015</td>
+      <td>0.018655</td>
+      <td>0.082503</td>
+      <td>0.287234</td>
+      <td>0.025759</td>
+      <td>1.000000</td>
+      <td>0.089680</td>
+      <td>0.008042</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000236</td>
+      <td>0.00</td>
+      <td>0.242302</td>
+      <td>0.0</td>
+      <td>0.172840</td>
+      <td>0.547998</td>
+      <td>0.782698</td>
+      <td>0.348962</td>
+      <td>0.043478</td>
+      <td>0.104962</td>
+      <td>...</td>
+      <td>0.011017</td>
+      <td>0.058064</td>
+      <td>0.104962</td>
+      <td>0.021462</td>
+      <td>0.306021</td>
+      <td>0.553191</td>
+      <td>0.113111</td>
+      <td>1.000000</td>
+      <td>0.204470</td>
+      <td>0.041808</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000236</td>
+      <td>0.00</td>
+      <td>0.242302</td>
+      <td>0.0</td>
+      <td>0.172840</td>
+      <td>0.694386</td>
+      <td>0.599382</td>
+      <td>0.348962</td>
+      <td>0.043478</td>
+      <td>0.104962</td>
+      <td>...</td>
+      <td>0.011017</td>
+      <td>0.058064</td>
+      <td>0.103885</td>
+      <td>0.006661</td>
+      <td>0.306021</td>
+      <td>0.547514</td>
+      <td>0.035109</td>
+      <td>0.979580</td>
+      <td>0.062814</td>
+      <td>0.004028</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.000293</td>
+      <td>0.00</td>
+      <td>0.063050</td>
+      <td>0.0</td>
+      <td>0.150206</td>
+      <td>0.658555</td>
+      <td>0.441813</td>
+      <td>0.448545</td>
+      <td>0.086957</td>
+      <td>0.066794</td>
+      <td>...</td>
+      <td>0.004461</td>
+      <td>0.043345</td>
+      <td>0.066412</td>
+      <td>0.002230</td>
+      <td>0.421118</td>
+      <td>0.645222</td>
+      <td>0.021667</td>
+      <td>0.988585</td>
+      <td>0.033197</td>
+      <td>0.001115</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.000705</td>
+      <td>0.00</td>
+      <td>0.063050</td>
+      <td>0.0</td>
+      <td>0.150206</td>
+      <td>0.687105</td>
+      <td>0.528321</td>
+      <td>0.448545</td>
+      <td>0.086957</td>
+      <td>0.066794</td>
+      <td>...</td>
+      <td>0.004461</td>
+      <td>0.043345</td>
+      <td>0.066794</td>
+      <td>0.006635</td>
+      <td>0.421118</td>
+      <td>0.648936</td>
+      <td>0.064464</td>
+      <td>1.000000</td>
+      <td>0.099338</td>
+      <td>0.009868</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>501</th>
+      <td>0.000633</td>
+      <td>0.00</td>
+      <td>0.420455</td>
+      <td>0.0</td>
+      <td>0.386831</td>
+      <td>0.580954</td>
+      <td>0.681771</td>
+      <td>0.122671</td>
+      <td>0.000000</td>
+      <td>0.164122</td>
+      <td>...</td>
+      <td>0.026936</td>
+      <td>0.146662</td>
+      <td>0.162090</td>
+      <td>0.035958</td>
+      <td>0.798551</td>
+      <td>0.882553</td>
+      <td>0.195787</td>
+      <td>0.975392</td>
+      <td>0.216382</td>
+      <td>0.048003</td>
+    </tr>
+    <tr>
+      <th>502</th>
+      <td>0.000438</td>
+      <td>0.00</td>
+      <td>0.420455</td>
+      <td>0.0</td>
+      <td>0.386831</td>
+      <td>0.490324</td>
+      <td>0.760041</td>
+      <td>0.105293</td>
+      <td>0.000000</td>
+      <td>0.164122</td>
+      <td>...</td>
+      <td>0.026936</td>
+      <td>0.146662</td>
+      <td>0.164122</td>
+      <td>0.033286</td>
+      <td>0.798551</td>
+      <td>0.893617</td>
+      <td>0.181239</td>
+      <td>1.000000</td>
+      <td>0.202815</td>
+      <td>0.041134</td>
+    </tr>
+    <tr>
+      <th>503</th>
+      <td>0.000612</td>
+      <td>0.00</td>
+      <td>0.420455</td>
+      <td>0.0</td>
+      <td>0.386831</td>
+      <td>0.654340</td>
+      <td>0.907312</td>
+      <td>0.094381</td>
+      <td>0.000000</td>
+      <td>0.164122</td>
+      <td>...</td>
+      <td>0.026936</td>
+      <td>0.146662</td>
+      <td>0.164122</td>
+      <td>0.017707</td>
+      <td>0.798551</td>
+      <td>0.893617</td>
+      <td>0.096414</td>
+      <td>1.000000</td>
+      <td>0.107892</td>
+      <td>0.011641</td>
+    </tr>
+    <tr>
+      <th>504</th>
+      <td>0.001161</td>
+      <td>0.00</td>
+      <td>0.420455</td>
+      <td>0.0</td>
+      <td>0.386831</td>
+      <td>0.619467</td>
+      <td>0.889804</td>
+      <td>0.114514</td>
+      <td>0.000000</td>
+      <td>0.164122</td>
+      <td>...</td>
+      <td>0.026936</td>
+      <td>0.146662</td>
+      <td>0.162694</td>
+      <td>0.021512</td>
+      <td>0.798551</td>
+      <td>0.885843</td>
+      <td>0.117127</td>
+      <td>0.982677</td>
+      <td>0.129930</td>
+      <td>0.017180</td>
+    </tr>
+    <tr>
+      <th>505</th>
+      <td>0.000462</td>
+      <td>0.00</td>
+      <td>0.420455</td>
+      <td>0.0</td>
+      <td>0.386831</td>
+      <td>0.473079</td>
+      <td>0.802266</td>
+      <td>0.125072</td>
+      <td>0.000000</td>
+      <td>0.164122</td>
+      <td>...</td>
+      <td>0.026936</td>
+      <td>0.146662</td>
+      <td>0.164122</td>
+      <td>0.027852</td>
+      <td>0.798551</td>
+      <td>0.893617</td>
+      <td>0.151649</td>
+      <td>1.000000</td>
+      <td>0.169702</td>
+      <td>0.028799</td>
+    </tr>
+  </tbody>
+</table>
+<p>506 rows × 104 columns</p>
+</div></div></div>
+</div>
+<p>Dada la gran cantidad de variables, se eliminarán según su VIF como en la base anterior.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">vif</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span>
+    <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">variance_inflation_factor</span><span class="p">(</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">]</span>
+    <span class="k">if</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span> <span class="k">break</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">vif</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">variance_inflation_factor</span><span class="p">(</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">if</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span> <span class="k">break</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="nn">Cell In[10], line 4,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">vif</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">variance_inflation_factor</span><span class="p">(</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">if</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span> <span class="k">break</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="nn">File C:\Python311\Lib\site-packages\statsmodels\stats\outliers_influence.py:197,</span> in <span class="ni">variance_inflation_factor</span><span class="nt">(exog, exog_idx)</span>
+<span class="g g-Whitespace">    </span><span class="mi">195</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">k_vars</span><span class="p">)</span> <span class="o">!=</span> <span class="n">exog_idx</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span> <span class="n">x_noti</span> <span class="o">=</span> <span class="n">exog</span><span class="p">[:,</span> <span class="n">mask</span><span class="p">]</span>
+<span class="ne">--&gt; </span><span class="mi">197</span> <span class="n">r_squared_i</span> <span class="o">=</span> <span class="n">OLS</span><span class="p">(</span><span class="n">x_i</span><span class="p">,</span> <span class="n">x_noti</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">rsquared</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span> <span class="n">vif</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">r_squared_i</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">199</span> <span class="k">return</span> <span class="n">vif</span>
+
+<span class="nn">File C:\Python311\Lib\site-packages\statsmodels\regression\linear_model.py:335,</span> in <span class="ni">RegressionModel.fit</span><span class="nt">(self, method, cov_type, cov_kwds, use_t, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">330</span> <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;pinv&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">331</span>     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;pinv_wexog&#39;</span><span class="p">)</span> <span class="ow">and</span>
+<span class="g g-Whitespace">    </span><span class="mi">332</span>             <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;normalized_cov_params&#39;</span><span class="p">)</span> <span class="ow">and</span>
+<span class="g g-Whitespace">    </span><span class="mi">333</span>             <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;rank&#39;</span><span class="p">)):</span>
+<span class="ne">--&gt; </span><span class="mi">335</span>         <span class="bp">self</span><span class="o">.</span><span class="n">pinv_wexog</span><span class="p">,</span> <span class="n">singular_values</span> <span class="o">=</span> <span class="n">pinv_extended</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wexog</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">336</span>         <span class="bp">self</span><span class="o">.</span><span class="n">normalized_cov_params</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">337</span>             <span class="bp">self</span><span class="o">.</span><span class="n">pinv_wexog</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pinv_wexog</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">339</span>         <span class="c1"># Cache these singular values for use later.</span>
+
+<span class="nn">File C:\Python311\Lib\site-packages\statsmodels\tools\tools.py:264,</span> in <span class="ni">pinv_extended</span><span class="nt">(x, rcond)</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">263</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">264</span> <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">265</span> <span class="n">s_orig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">266</span> <span class="n">m</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nn">File C:\Python311\Lib\site-packages\numpy\linalg\linalg.py:1681,</span> in <span class="ni">svd</span><span class="nt">(a, full_matrices, compute_uv, hermitian)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1678</span>         <span class="n">gufunc</span> <span class="o">=</span> <span class="n">_umath_linalg</span><span class="o">.</span><span class="n">svd_n_s</span>
+<span class="g g-Whitespace">   </span><span class="mi">1680</span> <span class="n">signature</span> <span class="o">=</span> <span class="s1">&#39;D-&gt;DdD&#39;</span> <span class="k">if</span> <span class="n">isComplexType</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;d-&gt;ddd&#39;</span>
+<span class="ne">-&gt; </span><span class="mi">1681</span> <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">vh</span> <span class="o">=</span> <span class="n">gufunc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span> <span class="n">extobj</span><span class="o">=</span><span class="n">extobj</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1682</span> <span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">result_t</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1683</span> <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">_realType</span><span class="p">(</span><span class="n">result_t</span><span class="p">),</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">LinearRegression</span><span class="p">())])</span>
+
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;classifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">LinearRegression</span><span class="p">()],</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;classifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">Ridge</span><span class="p">()],</span>
+        <span class="s1">&#39;classifier__alpha&#39;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s1">&#39;classifier&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">Lasso</span><span class="p">()],</span>
+        <span class="s1">&#39;classifier__alpha&#39;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="p">],</span>
+        <span class="s1">&#39;classifier__max_iter&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1000000</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;r2&#39;</span><span class="p">:</span> <span class="s1">&#39;r2&#39;</span><span class="p">,</span> <span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">:</span> <span class="s1">&#39;neg_root_mean_squared_error&#39;</span> <span class="p">},</span> <span class="n">refit</span> <span class="o">=</span> <span class="s1">&#39;r2&#39;</span><span class="p">)</span>
+<span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mejor puntaje en el entrenamiento: </span><span class="si">{</span><span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Puntaje en la prueba: </span><span class="si">{</span><span class="n">gs</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="w"> </span><span class="n">x_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_test</span><span class="w"> </span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;classifier&#39;: Ridge(), &#39;classifier__alpha&#39;: 1}
+Mejor puntaje en el entrenamiento: 0.30328396475476327
+Puntaje en la prueba: 0.29369160112228676
+</pre></div>
+</div>
+</div>
+</div>
+<p>Realizando los tres modelos manualmente tenemos:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">]:</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">LinearRegression</span><span class="p">(),</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorer</span> <span class="p">)</span>
+    <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="p">)</span>
+<span class="n">Results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+<span class="n">Results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>r2</th>
+      <th>neg_root_mean_squared_error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Linear</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Recordemos que se calcula el RMSE negativo para seguir la tendencia de maximizar los scores, ya que el RMSE es medida de error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">]:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">Ridge</span><span class="p">(</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span> <span class="p">),</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorer</span> <span class="p">)</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="p">)</span>
+    <span class="n">Results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;10^</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+<span class="n">Results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>r2</th>
+      <th>neg_root_mean_squared_error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10^-20</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-19</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-18</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-17</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-16</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-15</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-14</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-13</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-12</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-11</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-10</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-9</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-8</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-7</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-6</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-5</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-4</th>
+      <td>0.301532</td>
+      <td>-7.639611</td>
+    </tr>
+    <tr>
+      <th>10^-3</th>
+      <td>0.301539</td>
+      <td>-7.639584</td>
+    </tr>
+    <tr>
+      <th>10^-2</th>
+      <td>0.301601</td>
+      <td>-7.639314</td>
+    </tr>
+    <tr>
+      <th>10^-1</th>
+      <td>0.302148</td>
+      <td>-7.637034</td>
+    </tr>
+    <tr>
+      <th>10^0</th>
+      <td>0.303284</td>
+      <td>-7.637236</td>
+    </tr>
+    <tr>
+      <th>10^1</th>
+      <td>0.276530</td>
+      <td>-7.813879</td>
+    </tr>
+    <tr>
+      <th>10^2</th>
+      <td>0.109808</td>
+      <td>-8.686346</td>
+    </tr>
+    <tr>
+      <th>10^3</th>
+      <td>0.006414</td>
+      <td>-9.171920</td>
+    </tr>
+    <tr>
+      <th>10^4</th>
+      <td>-0.008501</td>
+      <td>-9.239566</td>
+    </tr>
+    <tr>
+      <th>10^5</th>
+      <td>-0.010057</td>
+      <td>-9.246588</td>
+    </tr>
+    <tr>
+      <th>10^6</th>
+      <td>-0.010213</td>
+      <td>-9.247293</td>
+    </tr>
+    <tr>
+      <th>10^7</th>
+      <td>-0.010228</td>
+      <td>-9.247363</td>
+    </tr>
+    <tr>
+      <th>10^8</th>
+      <td>-0.010230</td>
+      <td>-9.247370</td>
+    </tr>
+    <tr>
+      <th>10^9</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^10</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^11</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^12</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^13</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^14</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^15</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^16</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^17</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^18</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^19</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>En este caso podemos ver como se maximizana ambos scores cuando se llega a <span class="math notranslate nohighlight">\(\alpha=1\)</span>, con un <span class="math notranslate nohighlight">\(R^2\)</span> de 0.303 y un RMSE de 7.64. Estos puntajes son un poco mejores que la regresión lineal, pero aún así, no ubican al modelo como un buen predictor.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span><span class="s1">&#39;neg_root_mean_squared_error&#39;</span><span class="p">]:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">Lasso</span><span class="p">(</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">1000000</span> <span class="p">),</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorer</span> <span class="p">)</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="p">)</span>
+    <span class="n">Results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;10^</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+<span class="n">Results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>r2</th>
+      <th>neg_root_mean_squared_error</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10^-20</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-19</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-18</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-17</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-16</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-15</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-14</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-13</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-12</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-11</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-10</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-9</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-8</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-7</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-6</th>
+      <td>0.301532</td>
+      <td>-7.639614</td>
+    </tr>
+    <tr>
+      <th>10^-5</th>
+      <td>0.301532</td>
+      <td>-7.639612</td>
+    </tr>
+    <tr>
+      <th>10^-4</th>
+      <td>0.301542</td>
+      <td>-7.639580</td>
+    </tr>
+    <tr>
+      <th>10^-3</th>
+      <td>0.301634</td>
+      <td>-7.639298</td>
+    </tr>
+    <tr>
+      <th>10^-2</th>
+      <td>0.302398</td>
+      <td>-7.637328</td>
+    </tr>
+    <tr>
+      <th>10^-1</th>
+      <td>0.294306</td>
+      <td>-7.703133</td>
+    </tr>
+    <tr>
+      <th>10^0</th>
+      <td>0.027430</td>
+      <td>-9.081422</td>
+    </tr>
+    <tr>
+      <th>10^1</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^2</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^3</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^4</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^5</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^6</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^7</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^8</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^9</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^10</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^11</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^12</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^13</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^14</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^15</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^16</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^17</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^18</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+    <tr>
+      <th>10^19</th>
+      <td>-0.010230</td>
+      <td>-9.247371</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>En este caso, ambos puntajes se maximizan al llegar a un <span class="math notranslate nohighlight">\(\alpha = 10^{-2}\)</span>, cuyos valores son inferiores a los obtenidos previamente en la regresión Ridge.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_percentage_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+
+<span class="n">linear_classifier</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">ridge_classifier</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">)</span>
+<span class="n">lasso_classifier</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">1000000</span> <span class="p">)</span>
+
+<span class="n">linear_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">ridge_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">lasso_classifier</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">linear_predictions</span> <span class="o">=</span> <span class="n">linear_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">ridge_predictions</span> <span class="o">=</span> <span class="n">ridge_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+<span class="n">lasso_predictions</span> <span class="o">=</span> <span class="n">lasso_classifier</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+
+<span class="n">linear_scores</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">linear_predictions</span><span class="p">),</span>
+    <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">linear_predictions</span><span class="p">),</span>
+    <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">linear_predictions</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">ridge_scores</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">ridge_predictions</span><span class="p">),</span>
+    <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">ridge_predictions</span><span class="p">),</span>
+    <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">ridge_predictions</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">lasso_scores</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">lasso_predictions</span><span class="p">),</span>
+    <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">lasso_predictions</span><span class="p">),</span>
+    <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="n">lasso_predictions</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Linear&#39;</span><span class="p">:</span> <span class="n">linear_scores</span><span class="p">,</span>
+    <span class="s1">&#39;Ridge (alpha=1)&#39;</span><span class="p">:</span> <span class="n">ridge_scores</span><span class="p">,</span>
+    <span class="s1">&#39;Lasso (alpha=0.01)&#39;</span><span class="p">:</span> <span class="n">lasso_scores</span>
+<span class="p">}</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MAPE&#39;</span><span class="p">,</span> <span class="s1">&#39;MSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MAPE</th>
+      <th>MSE</th>
+      <th>R2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Linear</th>
+      <td>0.239675</td>
+      <td>54.232849</td>
+      <td>0.290654</td>
+    </tr>
+    <tr>
+      <th>Ridge (alpha=1)</th>
+      <td>0.242350</td>
+      <td>54.000642</td>
+      <td>0.293692</td>
+    </tr>
+    <tr>
+      <th>Lasso (alpha=0.01)</th>
+      <td>0.239666</td>
+      <td>54.077926</td>
+      <td>0.292681</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Por RMSE y <span class="math notranslate nohighlight">\(R^2\)</span> se confirma que el mejor modelo es una regresión ridge con <span class="math notranslate nohighlight">\(\alpha=1\)</span>, a pesar que este sea un terrible modelo para predecir la variable respuesta.</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="2-FraudDetection.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Modelos de Clasificación</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boston-housing">Boston Housing</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ricardo Watts
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

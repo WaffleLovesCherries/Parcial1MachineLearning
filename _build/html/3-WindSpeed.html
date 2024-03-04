@@ -1,0 +1,2305 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Velocidad del viento &#8212; Parcial 1 Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '3-WindSpeed';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Modelos de Clasificación" href="2-FraudDetection.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="1-HiperParam.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Parcial 1 Machine Learning - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Parcial 1 Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="1-HiperParam.html">
+                    Breast Cancer
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2-FraudDetection.html">Modelos de Clasificación</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Velocidad del viento</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/WaffleLovesCherries/Parcial1MachineLearning" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/WaffleLovesCherries/Parcial1MachineLearning/issues/new?title=Issue%20on%20page%20%2F3-WindSpeed.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/3-WindSpeed.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Velocidad del viento</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio">Análisis Exploratorio</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Velocidad del viento</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#humedad">Humedad</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rafaga">Ráfaga</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-variables">Eliminación de variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-de-regresion">Modelos de regresión</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-lineal">Regresión Lineal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-k-nn">Regresión k-NN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-ridge">Regresión Ridge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-lasso">Regresión Lasso</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">sklearn</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sb</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">pp</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.outliers_influence</span> <span class="kn">import</span> <span class="n">variance_inflation_factor</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span> <span class="n">sparse_output</span> <span class="o">=</span> <span class="kc">False</span> <span class="p">)</span><span class="o">.</span><span class="n">set_output</span><span class="p">(</span> <span class="n">transform</span> <span class="o">=</span> <span class="s1">&#39;pandas&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span> <span class="s1">&#39;data_treino_dv_df_2000_2010.csv&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>HORA (UTC)</th>
+      <th>VENTO, DIREï¿½ï¿½O HORARIA (gr) (ï¿½ (gr))</th>
+      <th>VENTO, VELOCIDADE HORARIA (m/s)</th>
+      <th>UMIDADE REL. MAX. NA HORA ANT. (AUT) (%)</th>
+      <th>UMIDADE REL. MIN. NA HORA ANT. (AUT) (%)</th>
+      <th>TEMPERATURA Mï¿½XIMA NA HORA ANT. (AUT) (ï¿½C)</th>
+      <th>TEMPERATURA Mï¿½NIMA NA HORA ANT. (AUT) (ï¿½C)</th>
+      <th>UMIDADE RELATIVA DO AR, HORARIA (%)</th>
+      <th>PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)</th>
+      <th>PRECIPITAï¿½ï¿½O TOTAL, HORï¿½RIO (mm)</th>
+      <th>VENTO, RAJADA MAXIMA (m/s)</th>
+      <th>PRESSï¿½O ATMOSFERICA MAX.NA HORA ANT. (AUT) (mB)</th>
+      <th>PRESSï¿½O ATMOSFERICA MIN. NA HORA ANT. (AUT) (mB)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>12:00</td>
+      <td>0.809017</td>
+      <td>1.8</td>
+      <td>69.0</td>
+      <td>60.0</td>
+      <td>22.6</td>
+      <td>20.7</td>
+      <td>61.0</td>
+      <td>888.2</td>
+      <td>0.0</td>
+      <td>3.8</td>
+      <td>888.2</td>
+      <td>887.7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>13:00</td>
+      <td>0.965926</td>
+      <td>2.7</td>
+      <td>62.0</td>
+      <td>55.0</td>
+      <td>24.2</td>
+      <td>22.5</td>
+      <td>55.0</td>
+      <td>888.4</td>
+      <td>0.0</td>
+      <td>4.7</td>
+      <td>888.4</td>
+      <td>888.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>14:00</td>
+      <td>0.891007</td>
+      <td>2.0</td>
+      <td>56.0</td>
+      <td>50.0</td>
+      <td>25.5</td>
+      <td>24.3</td>
+      <td>51.0</td>
+      <td>888.1</td>
+      <td>0.0</td>
+      <td>4.9</td>
+      <td>888.4</td>
+      <td>888.1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>15:00</td>
+      <td>0.848048</td>
+      <td>2.5</td>
+      <td>52.0</td>
+      <td>44.0</td>
+      <td>27.4</td>
+      <td>25.0</td>
+      <td>44.0</td>
+      <td>887.4</td>
+      <td>0.0</td>
+      <td>5.8</td>
+      <td>888.1</td>
+      <td>887.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16:00</td>
+      <td>0.224951</td>
+      <td>2.4</td>
+      <td>50.0</td>
+      <td>43.0</td>
+      <td>27.1</td>
+      <td>25.5</td>
+      <td>46.0</td>
+      <td>886.5</td>
+      <td>0.0</td>
+      <td>5.8</td>
+      <td>887.4</td>
+      <td>886.5</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>87688</th>
+      <td>19:00</td>
+      <td>-0.615661</td>
+      <td>5.6</td>
+      <td>83.0</td>
+      <td>78.0</td>
+      <td>21.8</td>
+      <td>21.1</td>
+      <td>80.0</td>
+      <td>879.1</td>
+      <td>0.0</td>
+      <td>12.3</td>
+      <td>879.8</td>
+      <td>879.1</td>
+    </tr>
+    <tr>
+      <th>87689</th>
+      <td>20:00</td>
+      <td>-0.469472</td>
+      <td>4.9</td>
+      <td>84.0</td>
+      <td>79.0</td>
+      <td>21.7</td>
+      <td>21.0</td>
+      <td>84.0</td>
+      <td>879.2</td>
+      <td>0.0</td>
+      <td>9.9</td>
+      <td>879.2</td>
+      <td>878.9</td>
+    </tr>
+    <tr>
+      <th>87690</th>
+      <td>21:00</td>
+      <td>-0.484810</td>
+      <td>4.5</td>
+      <td>86.0</td>
+      <td>82.0</td>
+      <td>21.2</td>
+      <td>20.6</td>
+      <td>86.0</td>
+      <td>879.7</td>
+      <td>0.0</td>
+      <td>8.9</td>
+      <td>879.8</td>
+      <td>879.2</td>
+    </tr>
+    <tr>
+      <th>87691</th>
+      <td>22:00</td>
+      <td>-0.484810</td>
+      <td>3.2</td>
+      <td>88.0</td>
+      <td>85.0</td>
+      <td>20.6</td>
+      <td>20.2</td>
+      <td>88.0</td>
+      <td>880.5</td>
+      <td>0.0</td>
+      <td>8.0</td>
+      <td>880.5</td>
+      <td>879.6</td>
+    </tr>
+    <tr>
+      <th>87692</th>
+      <td>23:00</td>
+      <td>-0.573576</td>
+      <td>2.3</td>
+      <td>95.0</td>
+      <td>88.0</td>
+      <td>20.2</td>
+      <td>19.3</td>
+      <td>95.0</td>
+      <td>881.1</td>
+      <td>0.6</td>
+      <td>7.5</td>
+      <td>881.1</td>
+      <td>880.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>87693 rows × 13 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">WindSpeed</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span> <span class="s1">&#39;data_treino_dv_df_2000_2010.csv&#39;</span> <span class="p">)</span>
+<span class="n">WindSpeed</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;HORA (UTC)&#39;</span><span class="p">:</span> <span class="s1">&#39;Hora&#39;</span><span class="p">,</span> 
+    <span class="s1">&#39;VENTO, DIREï¿½ï¿½O HORARIA (gr) (ï¿½ (gr))&#39;</span><span class="p">:</span> <span class="s1">&#39;Direccion&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;VENTO, VELOCIDADE HORARIA (m/s)&#39;</span><span class="p">:</span> <span class="s1">&#39;Velocidad&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;UMIDADE REL. MAX. NA HORA ANT. (AUT) (%)&#39;</span><span class="p">:</span> <span class="s1">&#39;Humedad Max&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;UMIDADE REL. MIN. NA HORA ANT. (AUT) (%)&#39;</span><span class="p">:</span> <span class="s1">&#39;Humedad Min&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TEMPERATURA Mï¿½XIMA NA HORA ANT. (AUT) (ï¿½C)&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp Max&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;TEMPERATURA Mï¿½NIMA NA HORA ANT. (AUT) (ï¿½C)&#39;</span><span class="p">:</span> <span class="s1">&#39;Temp Min&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;UMIDADE RELATIVA DO AR, HORARIA (%)&#39;</span><span class="p">:</span> <span class="s1">&#39;Humedad Rel&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PRESSAO ATMOSFERICA AO NIVEL DA ESTACAO, HORARIA (mB)&#39;</span><span class="p">:</span> <span class="s1">&#39;Presion&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PRECIPITAï¿½ï¿½O TOTAL, HORï¿½RIO (mm)&#39;</span><span class="p">:</span> <span class="s1">&#39;Precipitacion&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;VENTO, RAJADA MAXIMA (m/s)&#39;</span><span class="p">:</span> <span class="s1">&#39;Rafaga&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PRESSï¿½O ATMOSFERICA MAX.NA HORA ANT. (AUT) (mB)&#39;</span><span class="p">:</span> <span class="s1">&#39;Presion Max&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PRESSï¿½O ATMOSFERICA MIN. NA HORA ANT. (AUT) (mB)&#39;</span><span class="p">:</span> <span class="s1">&#39;Presion Min&#39;</span>
+<span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span> <span class="p">)</span>
+
+<span class="n">ws</span> <span class="o">=</span> <span class="n">WindSpeed</span>
+
+<span class="n">hour</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">WindSpeed</span><span class="p">[[</span><span class="s1">&#39;Hora&#39;</span><span class="p">]])</span>
+<span class="n">encoded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">hour</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">([</span><span class="s1">&#39;Hora&#39;</span><span class="p">]))</span>
+<span class="n">WindSpeed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">WindSpeed</span><span class="p">,</span> <span class="n">encoded</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Hora&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#F15152&#39;</span><span class="p">,</span> <span class="s1">&#39;#EDB183&#39;</span><span class="p">,</span> <span class="s1">&#39;#7FB285&#39;</span><span class="p">,</span> <span class="s1">&#39;#3A2E39&#39;</span><span class="p">,</span> <span class="s1">&#39;#1E555C&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="velocidad-del-viento">
+<h1>Velocidad del viento<a class="headerlink" href="#velocidad-del-viento" title="Link to this heading">#</a></h1>
+<p>Antes de seleccionar las variables a analizar se usarán pruebas estadísticas para identificar las variables mas influyentes en nuestra variable dependiente.</p>
+<p>En primer lugar se hará uso de una prueba de normalidad para determinar que tipo de prueba se usará.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">normaltest</span>
+<span class="n">Speed</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">[</span><span class="s1">&#39;Velocidad&#39;</span><span class="p">]</span>
+<span class="n">stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">normaltest</span><span class="p">(</span> <span class="n">Speed</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="sa">f</span><span class="s1">&#39;Resultados de la prueba:</span><span class="se">\n</span><span class="s1">Estadístico: </span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="se">\n</span><span class="s1">P-Valor: </span><span class="si">{</span><span class="n">pval</span><span class="si">}</span><span class="s1">&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resultados de la prueba:
+Estadístico: 1925.665458692347
+P-Valor: 0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dado que el p-valor es inferior al <span class="math notranslate nohighlight">\(\alpha\)</span> (0.05), la variable respuesta no pertenece a una distribución normal, por lo tanto se hará uso de pruebas no paramétricas.</p>
+<p>En el caso de las variables continuas, se hará uso de la prueba de correlación de spearman. Para agilizar la identificación, se mostrarán los resultados por medio de un mapa de correlación y solo se escogerán aquellas variables con correlación media o fuerte con respecto a la velocidad.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span> <span class="n">ws</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Hora&#39;</span><span class="p">]</span> <span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;spearman&#39;</span> <span class="p">),</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;RdBu&#39;</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="kc">True</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">title</span><span class="p">(</span> <span class="s1">&#39;Correlación entre las variables de WindSpeed&#39;</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f3de15d28ee56174c9a7a029e601428d407b60c3485f7baa0a835c1e9cdd7096.png" src="_images/f3de15d28ee56174c9a7a029e601428d407b60c3485f7baa0a835c1e9cdd7096.png" />
+</div>
+</div>
+<p>Es evidente que estas variables son la ráfaga máxima del viento, la humedad relativa máxima, mínima y horaria, y la dirección del viento.</p>
+<p>Por otro lado, se hará uso de una prueba de Kruskal-Wallis para ver si hay diferencia significativa del viento según la hora.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kruskal</span>
+
+<span class="n">hours</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">[</span><span class="s1">&#39;Hora&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="p">[</span><span class="n">WindSpeed</span><span class="p">[</span><span class="n">WindSpeed</span><span class="p">[</span><span class="s1">&#39;Hora&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">hour</span><span class="p">][</span><span class="s1">&#39;Velocidad&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">hours</span><span class="p">]</span>
+
+<span class="n">stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">kruskal</span><span class="p">(</span><span class="o">*</span><span class="n">speed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="sa">f</span><span class="s1">&#39;Resultados de la prueba:</span><span class="se">\n</span><span class="s1">Estadístico: </span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="se">\n</span><span class="s1">P-Valor: </span><span class="si">{</span><span class="n">pval</span><span class="si">}</span><span class="s1">&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">File C:\Python311\Lib\site-packages\pandas\core\indexes\base.py:3790,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3789</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">3790</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3791</span> <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+
+<span class="nn">File index.pyx:152,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">File index.pyx:181,</span> in <span class="ni">pandas._libs.index.IndexEngine.get_loc</span><span class="nt">()</span>
+
+<span class="nn">File pandas\_libs\hashtable_class_helper.pxi:7080,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+
+<span class="nn">File pandas\_libs\hashtable_class_helper.pxi:7088,</span> in <span class="ni">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="nt">()</span>
+
+<span class="ne">KeyError</span>: &#39;Hora&#39;
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kruskal</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">hours</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">[</span><span class="s1">&#39;Hora&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">speed</span> <span class="o">=</span> <span class="p">[</span><span class="n">WindSpeed</span><span class="p">[</span><span class="n">WindSpeed</span><span class="p">[</span><span class="s1">&#39;Hora&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">hour</span><span class="p">][</span><span class="s1">&#39;Velocidad&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">hour</span> <span class="ow">in</span> <span class="n">hours</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">stat</span><span class="p">,</span> <span class="n">pval</span> <span class="o">=</span> <span class="n">kruskal</span><span class="p">(</span><span class="o">*</span><span class="n">speed</span><span class="p">)</span>
+
+<span class="nn">File C:\Python311\Lib\site-packages\pandas\core\frame.py:3893,</span> in <span class="ni">DataFrame.__getitem__</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3891</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3892</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getitem_multilevel</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">3893</span> <span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3894</span> <span class="k">if</span> <span class="n">is_integer</span><span class="p">(</span><span class="n">indexer</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3895</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="n">indexer</span><span class="p">]</span>
+
+<span class="nn">File C:\Python311\Lib\site-packages\pandas\core\indexes\base.py:3797,</span> in <span class="ni">Index.get_loc</span><span class="nt">(self, key)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3792</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3793</span>         <span class="nb">isinstance</span><span class="p">(</span><span class="n">casted_key</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3794</span>         <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">slice</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">casted_key</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3795</span>     <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">3796</span>         <span class="k">raise</span> <span class="n">InvalidIndexError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">3797</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+<span class="g g-Whitespace">   </span><span class="mi">3798</span> <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3799</span>     <span class="c1"># If we have a listlike key, _check_indexing_error will raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3800</span>     <span class="c1">#  InvalidIndexError. Otherwise we fall through and re-raise</span>
+<span class="g g-Whitespace">   </span><span class="mi">3801</span>     <span class="c1">#  the TypeError.</span>
+<span class="g g-Whitespace">   </span><span class="mi">3802</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_indexing_error</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="ne">KeyError</span>: &#39;Hora&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dado que el p-valor es inferior al <span class="math notranslate nohighlight">\(\alpha\)</span>, se encuentra que hay diferencia significativa entre los grupos.</p>
+<section id="analisis-exploratorio">
+<h2>Análisis Exploratorio<a class="headerlink" href="#analisis-exploratorio" title="Link to this heading">#</a></h2>
+<p>En primer lugar podemos observar el comportamiento de estas variables más influyentes, en términos de media, desviación, mediana y quartiles por medio de la función <code class="docutils literal notranslate"><span class="pre">describe()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RelWindSpeed</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">[[</span><span class="s1">&#39;Velocidad&#39;</span><span class="p">,</span><span class="s1">&#39;Rafaga&#39;</span><span class="p">,</span><span class="s1">&#39;Humedad Max&#39;</span><span class="p">,</span><span class="s1">&#39;Humedad Min&#39;</span><span class="p">,</span><span class="s1">&#39;Humedad Rel&#39;</span><span class="p">,</span> <span class="s1">&#39;Direccion&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">RelWindSpeed</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Velocidad</th>
+      <th>Rafaga</th>
+      <th>Humedad Max</th>
+      <th>Humedad Min</th>
+      <th>Humedad Rel</th>
+      <th>Direccion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>87693.000000</td>
+      <td>87693.000000</td>
+      <td>87693.000000</td>
+      <td>87693.000000</td>
+      <td>87693.000000</td>
+      <td>87693.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>2.466192</td>
+      <td>5.161076</td>
+      <td>69.058465</td>
+      <td>63.176194</td>
+      <td>66.146682</td>
+      <td>0.405810</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.313968</td>
+      <td>2.311157</td>
+      <td>19.640222</td>
+      <td>20.166336</td>
+      <td>19.992327</td>
+      <td>0.686247</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>12.000000</td>
+      <td>10.000000</td>
+      <td>10.000000</td>
+      <td>-1.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1.500000</td>
+      <td>3.400000</td>
+      <td>54.000000</td>
+      <td>48.000000</td>
+      <td>51.000000</td>
+      <td>-0.156434</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>2.400000</td>
+      <td>5.000000</td>
+      <td>72.000000</td>
+      <td>64.000000</td>
+      <td>68.000000</td>
+      <td>0.788011</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>3.400000</td>
+      <td>6.800000</td>
+      <td>87.000000</td>
+      <td>80.000000</td>
+      <td>84.000000</td>
+      <td>0.970296</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>10.000000</td>
+      <td>24.300000</td>
+      <td>100.000000</td>
+      <td>98.000000</td>
+      <td>99.000000</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Podemos resaltar que a nivel general, las desviaciones estandar son inferiores a la media, por lo que se pueden considerar relativamente pequeñas. Del mismo modo, no hay diferencia marcada entre la media y la mediana de la mayoria de variables, por lo que se puede preveer una simetría en la distribución de los datos. Como excepciíon está la dirección, cuya desviación es un 70% más grande que su media. Por otro lado, se prevee una asimetria positva, ya que su media es inferior a su mediana.</p>
+<p>En cuanto a datos faltantes, es facil comprobar que ninguna variable presenta fallos, es decir, no hay necesidad de inputar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">WindSpeed</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hora             0
+Direccion        0
+Velocidad        0
+Humedad Max      0
+Humedad Min      0
+Temp Max         0
+Temp Min         0
+Humedad Rel      0
+Presion          0
+Precipitacion    0
+Rafaga           0
+Presion Max      0
+Presion Min      0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id1">
+<h3>Velocidad del viento<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span> <span class="n">data</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">[</span><span class="s1">&#39;Velocidad&#39;</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="n">palette</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Velocidad del viento (m/s)&#39;</span><span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f14172b9e7851ee9c7621bbe502eaaaad9a2a012cc1cddb04bdf9d67222f233d.png" src="_images/f14172b9e7851ee9c7621bbe502eaaaad9a2a012cc1cddb04bdf9d67222f233d.png" />
+</div>
+</div>
+<p>A diferencia de lo que se esperaba, la variable presenta una asimetría positiva marcada, como se ve en la gráfica. Este comportamiento se presenta dada la gran cantidad de datos atípicos que corren la media hacia la mediana.</p>
+</section>
+<section id="humedad">
+<h3>Humedad<a class="headerlink" href="#humedad" title="Link to this heading">#</a></h3>
+<p>Dado que las variables comparten rangos y mediciones similares, es posible compararlas en una misma gráfica.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span> <span class="n">data</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">[[</span><span class="s1">&#39;Humedad Max&#39;</span><span class="p">,</span> <span class="s1">&#39;Humedad Rel&#39;</span><span class="p">,</span> <span class="s1">&#39;Humedad Min&#39;</span> <span class="p">]],</span> <span class="n">palette</span> <span class="o">=</span> <span class="n">palette</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">% d</span><span class="s1">e humedad.&#39;</span><span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b8a1f251ed2887d0f55178972c172a811815c8d8792bea7b51abb94d55e8c641.png" src="_images/b8a1f251ed2887d0f55178972c172a811815c8d8792bea7b51abb94d55e8c641.png" />
+</div>
+</div>
+<p>Como se puede notar, hay diferencias marcadas entre los grupos, aunque es un comportamiento esperado, como lo sugieren los propios nombres de las variables. También es notoria la ausencia de datos atípicos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">category</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="p">[</span><span class="s1">&#39;Humedad Max&#39;</span><span class="p">,</span> <span class="s1">&#39;Humedad Rel&#39;</span><span class="p">,</span> <span class="s1">&#39;Humedad Min&#39;</span> <span class="p">]</span> <span class="p">):</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span> <span class="n">data</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">category</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Velocidad&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">palette</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">label</span> <span class="o">=</span> <span class="n">category</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span>  <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">title</span><span class="p">(</span> <span class="s1">&#39;Grafico de disperción de velocidad según humedad&#39;</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span> <span class="s1">&#39;Humedad (%)&#39;</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span> <span class="s1">&#39;Velocidad&#39;</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0807af5e242543ad602fe16b2532000f74876fc336c443e9912d809945494fe3.png" src="_images/0807af5e242543ad602fe16b2532000f74876fc336c443e9912d809945494fe3.png" />
+</div>
+</div>
+<p>Es evidente que se sigue una correlación bastante debil, dada la dispersión de los puntos independientemente de la variable.</p>
+</section>
+<section id="rafaga">
+<h3>Ráfaga<a class="headerlink" href="#rafaga" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span> <span class="n">data</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">[</span><span class="s1">&#39;Rafaga&#39;</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="n">palette</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Máxima ráfaga de viento (m/s)&#39;</span><span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9269b09685b3eb0a6e715764c3fb969aa6002207083f06bf8c7849ada801066f.png" src="_images/9269b09685b3eb0a6e715764c3fb969aa6002207083f06bf8c7849ada801066f.png" />
+</div>
+</div>
+<p>Así como en el caso de la variable dependiente, podemos ver una cantidad grande de puntos atípicos hacia la derecha, lo que causa la asimetría positiva.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span> <span class="n">data</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;Rafaga&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;Velocidad&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">palette</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">title</span><span class="p">(</span> <span class="s1">&#39;Grafico de disperción de velocidad según ráfaga&#39;</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span> <span class="s1">&#39;Máxima ráfaga de viento&#39;</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span> <span class="s1">&#39;Velocidad&#39;</span> <span class="p">)</span>
+<span class="n">pp</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e5fe63cec80743e8148aac66fb0a0da329146f319e95a26b21c532ebdbd9eb7e.png" src="_images/e5fe63cec80743e8148aac66fb0a0da329146f319e95a26b21c532ebdbd9eb7e.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="eliminacion-de-variables">
+<h2>Eliminación de variables<a class="headerlink" href="#eliminacion-de-variables" title="Link to this heading">#</a></h2>
+<p>Se hará uso de la función <code class="docutils literal notranslate"><span class="pre">variance_inflation_factor()</span></code> para eliminar variables que presenten alta colinealidad para reducir el modelo en lo posible.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="s1">&#39;Velocidad&#39;</span> <span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">WindSpeed</span><span class="p">[</span><span class="s1">&#39;Velocidad&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">vif</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span>
+    <span class="n">vif</span><span class="p">[</span><span class="s1">&#39;Valor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span> <span class="n">variance_inflation_factor</span><span class="p">(</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">i</span> <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span> <span class="p">]</span>
+    <span class="k">if</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Valor&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span> <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Variable&#39;</span><span class="p">]</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">vif</span><span class="o">.</span><span class="n">max</span><span class="p">()[</span><span class="s1">&#39;Valor&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span> <span class="sa">f</span><span class="s1">&#39;Se elimina </span><span class="si">{</span><span class="w"> </span><span class="n">var</span><span class="w"> </span><span class="si">}</span><span class="s1"> con un VIF de </span><span class="si">{</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="si">}</span><span class="s1">&#39;</span> <span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">var</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Matriz resultante:&#39;</span> <span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Se elimina Temp Min con un VIF de 4109.619639807946
+Se elimina Temp Max con un VIF de 4108.85135764329
+Se elimina Rafaga con un VIF de 3614.6125897884676
+Se elimina Presion Min con un VIF de 3613.2107252424953
+Se elimina Presion Max con un VIF de 3422.6849612504425
+Se elimina Presion con un VIF de 2654.3047568568445
+Se elimina Precipitacion con un VIF de 69.97029034210517
+Se elimina Humedad Rel con un VIF de 68.79480864509135
+Se elimina Humedad Min con un VIF de 26.8470427742619
+Matriz resultante:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Direccion</th>
+      <th>Humedad Max</th>
+      <th>Hora_00:00</th>
+      <th>Hora_01:00</th>
+      <th>Hora_02:00</th>
+      <th>Hora_03:00</th>
+      <th>Hora_04:00</th>
+      <th>Hora_05:00</th>
+      <th>Hora_06:00</th>
+      <th>Hora_07:00</th>
+      <th>...</th>
+      <th>Hora_14:00</th>
+      <th>Hora_15:00</th>
+      <th>Hora_16:00</th>
+      <th>Hora_17:00</th>
+      <th>Hora_18:00</th>
+      <th>Hora_19:00</th>
+      <th>Hora_20:00</th>
+      <th>Hora_21:00</th>
+      <th>Hora_22:00</th>
+      <th>Hora_23:00</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.809017</td>
+      <td>69.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.965926</td>
+      <td>62.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.891007</td>
+      <td>56.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.848048</td>
+      <td>52.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.224951</td>
+      <td>50.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>87688</th>
+      <td>-0.615661</td>
+      <td>83.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>87689</th>
+      <td>-0.469472</td>
+      <td>84.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>87690</th>
+      <td>-0.484810</td>
+      <td>86.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>87691</th>
+      <td>-0.484810</td>
+      <td>88.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>87692</th>
+      <td>-0.573576</td>
+      <td>95.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>87693 rows × 26 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vif</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variable</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Direccion</td>
+      <td>1.183372</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Humedad Max</td>
+      <td>1.585993</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Hora_00:00</td>
+      <td>1.929822</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Hora_01:00</td>
+      <td>1.990094</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Hora_02:00</td>
+      <td>2.037843</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Hora_03:00</td>
+      <td>2.075984</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Hora_04:00</td>
+      <td>2.111718</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Hora_05:00</td>
+      <td>2.151399</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Hora_06:00</td>
+      <td>2.185194</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Hora_07:00</td>
+      <td>2.216864</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Hora_08:00</td>
+      <td>2.249187</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Hora_09:00</td>
+      <td>2.270367</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Hora_10:00</td>
+      <td>2.287168</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Hora_11:00</td>
+      <td>2.231530</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Hora_12:00</td>
+      <td>2.083450</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Hora_13:00</td>
+      <td>1.954517</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Hora_14:00</td>
+      <td>1.831236</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Hora_15:00</td>
+      <td>1.724902</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Hora_16:00</td>
+      <td>1.646287</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Hora_17:00</td>
+      <td>1.592054</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Hora_18:00</td>
+      <td>1.562316</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Hora_19:00</td>
+      <td>1.569536</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Hora_20:00</td>
+      <td>1.596689</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Hora_21:00</td>
+      <td>1.678622</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Hora_22:00</td>
+      <td>1.788981</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Hora_23:00</td>
+      <td>1.871444</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="modelos-de-regresion">
+<h2>Modelos de regresión<a class="headerlink" href="#modelos-de-regresion" title="Link to this heading">#</a></h2>
+<p>La partición sugerida por la guía se puede conseguir programando manualmente de la siguiente forma:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 7, 14 y 21 dias, train: 1</span>
+<span class="c1"># ( 0-6, 7 ), ( 0-13, 14 ), ( 0-20, 21 ) </span>
+<span class="c1"># 168, 336 y 504 horas, train: 24</span>
+<span class="c1"># ( 0-143, 144-167 ), ( 0-311, 312-335 ), ( 0-479, 480-503 )</span>
+
+<span class="n">CVSplits</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span>
+        <span class="p">(</span>
+            <span class="p">[</span> <span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="n">k</span><span class="o">*</span><span class="n">i</span> <span class="p">,</span> <span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span> <span class="p">],</span> 
+            <span class="p">[</span> <span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">24</span> <span class="p">)</span> <span class="p">]</span>
+        <span class="p">)</span> 
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">//</span><span class="n">k</span> <span class="p">)</span> 
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span> <span class="mi">168</span><span class="p">,</span> <span class="mi">336</span><span class="p">,</span> <span class="mi">504</span> <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Nótese que se usan los valores de 168, 336 y 504 que son la cantidad de horas que hay en 7, 14 y 21 días respectivamente.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">Ridge</span><span class="p">,</span> <span class="n">Lasso</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_percentage_error</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span><span class="p">,</span> <span class="n">make_scorer</span>
+
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">mean</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="regresion-lineal">
+<h3>Regresión Lineal<a class="headerlink" href="#regresion-lineal" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scorers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">make_scorer</span><span class="p">(</span> <span class="n">mean_absolute_percentage_error</span> <span class="p">),</span>
+    <span class="s1">&#39;MAPE&#39;</span><span class="p">:</span> <span class="n">make_scorer</span><span class="p">(</span> <span class="n">mean_squared_error</span> <span class="p">),</span>
+    <span class="s1">&#39;R2&#39;</span><span class="p">:</span> <span class="n">make_scorer</span><span class="p">(</span> <span class="n">r2_score</span> <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">linearScores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 14&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 21&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="n">scorers</span><span class="p">:</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">CVSplit</span> <span class="ow">in</span> <span class="n">CVSplits</span><span class="p">:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">LinearRegression</span><span class="p">(),</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="n">CVSplit</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorers</span><span class="p">[</span><span class="n">scorer</span><span class="p">]</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">scorer</span> <span class="o">==</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span> <span class="n">score</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span> <span class="p">]</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">mean</span><span class="p">(</span> <span class="n">scores</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">linearScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">scorer</span> <span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+
+<span class="n">linearScores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T = 7</th>
+      <th>T = 14</th>
+      <th>T = 21</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>RMSE</th>
+      <td>6.360822e+06</td>
+      <td>6.121072e+06</td>
+      <td>6.619809e+06</td>
+    </tr>
+    <tr>
+      <th>MAPE</th>
+      <td>1.338140e+00</td>
+      <td>1.271841e+00</td>
+      <td>1.276728e+00</td>
+    </tr>
+    <tr>
+      <th>R2</th>
+      <td>-4.520518e-01</td>
+      <td>-3.948834e-01</td>
+      <td>-4.020871e-01</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="regresion-k-nn">
+<h3>Regresión k-NN<a class="headerlink" href="#regresion-k-nn" title="Link to this heading">#</a></h3>
+<p>Dado que se hará una busqueda por parámetros, se tomará la ultima partición de cada split y se considerará como conjunto de prueba. Al usar índices manuales, se tiene un control certero sobre cuales observaciones están entrado al modelo, por lo que solo es necesario eliminar el ultimo set de particiones y tomar los respectivos índices entre los datos para obtener un set de testeo aislado.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="p">[],[]</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">CVSplits</span><span class="p">:</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">c</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">x_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">x</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">]</span> <span class="p">)</span>
+    <span class="n">y_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">y</span><span class="p">[</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">]</span> <span class="p">)</span>
+<span class="n">GridCVSplits</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">CVSplits</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dado que el RMSE es la métrica de evaluación, solo se buscará el mejor score en los tres periodos y posteriormente se calcularán las métricas adicionales.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knnScores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 14&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 21&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">16</span> <span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">CVSplit</span> <span class="ow">in</span> <span class="n">GridCVSplits</span><span class="p">:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span> <span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">i</span> <span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="n">CVSplit</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorers</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">]</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">scorer</span> <span class="o">==</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span> <span class="n">score</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span> <span class="p">]</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">mean</span><span class="p">(</span> <span class="n">scores</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">knnScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">i</span> <span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+
+<span class="n">knnScores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T = 7</th>
+      <th>T = 14</th>
+      <th>T = 21</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1.761745e+14</td>
+      <td>1.917797e+14</td>
+      <td>1.839406e+14</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.860622e+14</td>
+      <td>1.971412e+14</td>
+      <td>1.945778e+14</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.885521e+14</td>
+      <td>1.952816e+14</td>
+      <td>2.024511e+14</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.911053e+14</td>
+      <td>1.948408e+14</td>
+      <td>2.006873e+14</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.947807e+14</td>
+      <td>1.994161e+14</td>
+      <td>2.021601e+14</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2.001299e+14</td>
+      <td>2.009328e+14</td>
+      <td>2.002327e+14</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2.003112e+14</td>
+      <td>2.038999e+14</td>
+      <td>1.985910e+14</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.996082e+14</td>
+      <td>2.053825e+14</td>
+      <td>2.019828e+14</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1.999715e+14</td>
+      <td>2.086932e+14</td>
+      <td>2.036148e+14</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2.006484e+14</td>
+      <td>2.094724e+14</td>
+      <td>2.061204e+14</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2.010414e+14</td>
+      <td>2.102747e+14</td>
+      <td>2.071787e+14</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2.015794e+14</td>
+      <td>2.109432e+14</td>
+      <td>2.077060e+14</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2.013351e+14</td>
+      <td>2.132868e+14</td>
+      <td>2.083536e+14</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2.003138e+14</td>
+      <td>2.135670e+14</td>
+      <td>2.095399e+14</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2.005906e+14</td>
+      <td>2.153748e+14</td>
+      <td>2.109389e+14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Como se puede ver en la tabla, los mejores resultados están provistos por 1-nn, a pesar que presente un score terrible. Esto se puede dar gracias al hecho que los algoritmos k-NN requieren de una gran cantidad de datos para poder hacer un buen proceso de votación.</p>
+<p>Las métricas finales del modelo resultan de la siguiente manera:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knnScores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 14&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 21&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="n">scorers</span><span class="p">:</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">CVSplit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="n">CVSplits</span> <span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">KNeighborsRegressor</span><span class="p">(</span> <span class="n">n_neighbors</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">),</span> <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cv</span> <span class="o">=</span> <span class="p">[</span> <span class="n">CVSplit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">],</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorers</span><span class="p">[</span><span class="n">scorer</span><span class="p">]</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">scorer</span> <span class="o">==</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span> <span class="n">score</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span> <span class="p">]</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">mean</span><span class="p">(</span> <span class="n">scores</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">knnScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">scorer</span> <span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+
+<span class="n">knnScores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T = 7</th>
+      <th>T = 14</th>
+      <th>T = 21</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>RMSE</th>
+      <td>0.672901</td>
+      <td>1.061002</td>
+      <td>0.795981</td>
+    </tr>
+    <tr>
+      <th>MAPE</th>
+      <td>1.279167</td>
+      <td>2.119167</td>
+      <td>2.141250</td>
+    </tr>
+    <tr>
+      <th>R2</th>
+      <td>-1.328183</td>
+      <td>-0.859031</td>
+      <td>-0.444621</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Así como en el modelo anterior, el <span class="math notranslate nohighlight">\(R^2\)</span> arroja un resultado negativo, aún así, este modelo presenta un mejor RMSE que además cae dentro del rango, por lo que supera como modelo al modelo de regresión lineal.</p>
+</section>
+<section id="regresion-ridge">
+<h3>Regresión Ridge<a class="headerlink" href="#regresion-ridge" title="Link to this heading">#</a></h3>
+<p>Al igual que en el modelo <span class="math notranslate nohighlight">\(k-nn\)</span>, se hará uso de una busqueda de parámetros, en este caso <span class="math notranslate nohighlight">\(\alpha\)</span>. Por tanto, se usará la misma estrategia que en el modelo anterior. Ahora bien, se hará uso de una escala exponencial.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridgeScores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 14&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 21&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span> <span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">CVSplit</span> <span class="ow">in</span> <span class="n">GridCVSplits</span><span class="p">:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">Ridge</span><span class="p">(</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span> <span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="n">CVSplit</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorers</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">]</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">scorer</span> <span class="o">==</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span> <span class="n">score</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span> <span class="p">]</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">mean</span><span class="p">(</span> <span class="n">scores</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">ridgeScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="sa">f</span><span class="s1">&#39;10^</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+
+<span class="n">ridgeScores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T = 7</th>
+      <th>T = 14</th>
+      <th>T = 21</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10^-10</th>
+      <td>1.524255e+14</td>
+      <td>1.559666e+14</td>
+      <td>1.651258e+14</td>
+    </tr>
+    <tr>
+      <th>10^-9</th>
+      <td>1.524255e+14</td>
+      <td>1.559666e+14</td>
+      <td>1.651258e+14</td>
+    </tr>
+    <tr>
+      <th>10^-8</th>
+      <td>1.524255e+14</td>
+      <td>1.559666e+14</td>
+      <td>1.651258e+14</td>
+    </tr>
+    <tr>
+      <th>10^-7</th>
+      <td>1.524255e+14</td>
+      <td>1.559666e+14</td>
+      <td>1.651258e+14</td>
+    </tr>
+    <tr>
+      <th>10^-6</th>
+      <td>1.524255e+14</td>
+      <td>1.559666e+14</td>
+      <td>1.651258e+14</td>
+    </tr>
+    <tr>
+      <th>10^-5</th>
+      <td>1.524255e+14</td>
+      <td>1.559666e+14</td>
+      <td>1.651258e+14</td>
+    </tr>
+    <tr>
+      <th>10^-4</th>
+      <td>1.524253e+14</td>
+      <td>1.559668e+14</td>
+      <td>1.651261e+14</td>
+    </tr>
+    <tr>
+      <th>10^-3</th>
+      <td>1.524237e+14</td>
+      <td>1.559684e+14</td>
+      <td>1.651284e+14</td>
+    </tr>
+    <tr>
+      <th>10^-2</th>
+      <td>1.524084e+14</td>
+      <td>1.559841e+14</td>
+      <td>1.651519e+14</td>
+    </tr>
+    <tr>
+      <th>10^-1</th>
+      <td>1.523297e+14</td>
+      <td>1.561402e+14</td>
+      <td>1.653842e+14</td>
+    </tr>
+    <tr>
+      <th>10^0</th>
+      <td>1.537626e+14</td>
+      <td>1.576545e+14</td>
+      <td>1.675301e+14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Es evidente que con valores por debajo de <span class="math notranslate nohighlight">\(10^{-5}\)</span>, la métrica es esencialmente la misma, por lo que se asumirá este límite como la mejor y se tomará el respectivo <span class="math notranslate nohighlight">\(\alpha\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridgeScores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 14&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 21&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="n">scorers</span><span class="p">:</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">CVSplit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="n">CVSplits</span> <span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">Ridge</span><span class="p">(</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span> <span class="p">),</span> <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cv</span> <span class="o">=</span> <span class="p">[</span> <span class="n">CVSplit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">],</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorers</span><span class="p">[</span><span class="n">scorer</span><span class="p">]</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">scorer</span> <span class="o">==</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span> <span class="n">score</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span> <span class="p">]</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">mean</span><span class="p">(</span> <span class="n">scores</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">ridgeScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">scorer</span> <span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+
+<span class="n">ridgeScores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T = 7</th>
+      <th>T = 14</th>
+      <th>T = 21</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>RMSE</th>
+      <td>0.524710</td>
+      <td>0.893263</td>
+      <td>0.741815</td>
+    </tr>
+    <tr>
+      <th>MAPE</th>
+      <td>0.372653</td>
+      <td>0.982765</td>
+      <td>1.285152</td>
+    </tr>
+    <tr>
+      <th>R2</th>
+      <td>0.321743</td>
+      <td>0.137873</td>
+      <td>0.132956</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Dado que se tiene un modelo con aún menor RMSE y un <span class="math notranslate nohighlight">\(R^2\)</span> positivo, se considera la regresión Ridge como el mejor modelo.</p>
+</section>
+<section id="regresion-lasso">
+<h3>Regresión Lasso<a class="headerlink" href="#regresion-lasso" title="Link to this heading">#</a></h3>
+<p>Se usará exactamente el mismo proceso que se hizo en la regresión Ridge, dadas las similitudes entre estos dos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lassoScores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 14&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 21&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span> <span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">CVSplit</span> <span class="ow">in</span> <span class="n">GridCVSplits</span><span class="p">:</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">Lasso</span><span class="p">(</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">i</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">10000</span> <span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span> <span class="o">=</span> <span class="n">CVSplit</span><span class="p">,</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorers</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">]</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">scorer</span> <span class="o">==</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span> <span class="n">score</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span> <span class="p">]</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">mean</span><span class="p">(</span> <span class="n">scores</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">lassoScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="sa">f</span><span class="s1">&#39;10^</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+
+<span class="n">lassoScores</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Así como en el caso anterior, a partir de valores inferiores a <span class="math notranslate nohighlight">\(10^{-7}\)</span> el score relevante no cambia mucho, por lo que se usará este para el set de test.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lassoScores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 14&#39;</span><span class="p">,</span> <span class="s1">&#39;T = 21&#39;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">scorer</span> <span class="ow">in</span> <span class="n">scorers</span><span class="p">:</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">CVSplit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span> <span class="n">CVSplits</span> <span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span> <span class="n">Ridge</span><span class="p">(</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">),</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">1000</span> <span class="p">),</span> <span class="n">x_test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_test</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cv</span> <span class="o">=</span> <span class="p">[</span> <span class="n">CVSplit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">],</span> <span class="n">scoring</span> <span class="o">=</span> <span class="n">scorers</span><span class="p">[</span><span class="n">scorer</span><span class="p">]</span> <span class="p">)</span>
+        <span class="k">if</span> <span class="n">scorer</span> <span class="o">==</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">:</span> <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span> <span class="n">score</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">scores</span> <span class="p">]</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">mean</span><span class="p">(</span> <span class="n">scores</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="n">lassoScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span> <span class="n">scorer</span> <span class="p">]</span> <span class="o">=</span> <span class="n">row</span>
+
+<span class="n">lassoScores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>T = 7</th>
+      <th>T = 14</th>
+      <th>T = 21</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>RMSE</th>
+      <td>0.524710</td>
+      <td>0.893263</td>
+      <td>0.741815</td>
+    </tr>
+    <tr>
+      <th>MAPE</th>
+      <td>0.372652</td>
+      <td>0.982765</td>
+      <td>1.285152</td>
+    </tr>
+    <tr>
+      <th>R2</th>
+      <td>0.321744</td>
+      <td>0.137873</td>
+      <td>0.132956</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Sorprendentemente, se obtienen los mismos resultados que en la regresión anterior. Aún así, del <span class="math notranslate nohighlight">\(R^2\)</span> podemos ver que ninguno de estos modelos con los periodos de tiempo sugeridos son confiables para estimar la velocidad del tiempo. Este problema puede ser resuelto cambiando el tipo de separación para la validación cruzada o simplemente incluyendo variables que aporten mejores estimaciones. Aún así podemos ver que hay una moda en cuanto a que el mejor periodo de validación es con un periodo de 7 dias.</p>
+<p>Para resumir los resultados, podemos ver la siguiente tabla:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FinalScores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span><span class="s1">&#39;MAPE&#39;</span><span class="p">,</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span> <span class="p">)</span>
+<span class="n">FinalScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Ridge&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ridgeScores</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">]</span>
+<span class="n">FinalScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Lasso&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lassoScores</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">]</span>
+<span class="n">FinalScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Linear&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linearScores</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">]</span>
+<span class="n">FinalScores</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;K-NN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">knnScores</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;T = 7&#39;</span><span class="p">]</span>
+<span class="n">FinalScores</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RMSE</th>
+      <th>MAPE</th>
+      <th>R2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Ridge</th>
+      <td>5.247101e-01</td>
+      <td>0.372653</td>
+      <td>0.321743</td>
+    </tr>
+    <tr>
+      <th>Lasso</th>
+      <td>5.247100e-01</td>
+      <td>0.372652</td>
+      <td>0.321744</td>
+    </tr>
+    <tr>
+      <th>Linear</th>
+      <td>6.360822e+06</td>
+      <td>1.338140</td>
+      <td>-0.452052</td>
+    </tr>
+    <tr>
+      <th>K-NN</th>
+      <td>6.729005e-01</td>
+      <td>1.279167</td>
+      <td>-1.328183</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2-FraudDetection.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Modelos de Clasificación</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio">Análisis Exploratorio</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Velocidad del viento</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#humedad">Humedad</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rafaga">Ráfaga</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eliminacion-de-variables">Eliminación de variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-de-regresion">Modelos de regresión</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-lineal">Regresión Lineal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-k-nn">Regresión k-NN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-ridge">Regresión Ridge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-lasso">Regresión Lasso</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ricardo Watts
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
